@@ -8,6 +8,9 @@ import Pessoas from "./pages/Pessoas"
 import Recrutamento from "./pages/Recrutamento"
 import Contratos from "./pages/Contratos"
 import Relatorios from "./pages/Relatorios"
+import Treinamentos from "./pages/Treinamentos"
+import Pagamentos from "./pages/Pagamentos"
+import Frequencia from "./pages/Frequencia"
 
 // Placeholder pages
 const Configuracoes = () => <ComingSoon title="Configurações" />
@@ -24,10 +27,10 @@ export default function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/pessoas" element={<Pessoas />} />
           <Route path="/recrutamento" element={<Recrutamento />} />
-          <Route path="/treinamentos" element={<ComingSoon title="Treinamentos" />} />
+          <Route path="/treinamentos" element={<Treinamentos />} />
           <Route path="/contratos" element={<Contratos />} />
-          <Route path="/pagamentos" element={<ComingSoon title="Pagamentos" />} />
-          <Route path="/frequencia" element={<ComingSoon title="Frequência" />} />
+          <Route path="/pagamentos" element={<Pagamentos />} />
+          <Route path="/frequencia" element={<Frequencia />} />
           <Route path="/relatorios" element={<Relatorios />} />
           <Route path="/configuracoes" element={<Configuracoes />} />
         </Route>
