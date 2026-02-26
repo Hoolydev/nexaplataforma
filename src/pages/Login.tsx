@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
-import { BarChart2, Mail, Lock, ArrowRight, Loader2, AlertCircle } from "lucide-react"
+import { Mail, Lock, ArrowRight, Loader2, AlertCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -38,8 +38,8 @@ export default function Login() {
             {/* Top bar */}
             <div className="px-6 py-4 border-b border-zinc-100">
                 <Link to="/" className="flex items-center gap-2 w-fit group">
-                    <div className="w-6 h-6 bg-blue-600 rounded flex items-center justify-center">
-                        <BarChart2 className="text-white w-3.5 h-3.5" />
+                    <div className="w-6 h-6 rounded flex items-center justify-center overflow-hidden bg-white shadow-sm">
+                        <img src="/nexa-icon.png" alt="Nexa" className="w-full h-full object-contain" />
                     </div>
                     <span className="text-sm font-semibold text-zinc-900 group-hover:text-zinc-700 transition-colors">
                         Nexa Gestão

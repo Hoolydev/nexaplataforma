@@ -12,7 +12,6 @@ import {
     Settings,
     Moon,
     LogOut,
-    Building2,
     Menu,
     Sun,
     X
@@ -63,8 +62,8 @@ export default function Layout() {
             {/* Mobile Toggle */}
             <div className="lg:hidden fixed top-0 w-full bg-white border-b z-50 px-4 py-3 flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-blue-600 rounded-md flex items-center justify-center">
-                        <Building2 className="text-white w-5 h-5" />
+                    <div className="w-8 h-8 rounded-md flex items-center justify-center overflow-hidden bg-white shadow-sm">
+                        <img src="/nexa-icon.png" alt="Nexa" className="w-full h-full object-contain" />
                     </div>
                     <span className="font-bold text-slate-900">Nexa Gestão</span>
                 </div>
@@ -79,8 +78,8 @@ export default function Layout() {
                 mobileMenuOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
             )}>
                 <div className="p-6 flex items-center gap-3">
-                    <div className="w-8 h-8 bg-blue-500 rounded-md flex items-center justify-center">
-                        <Building2 className="text-white w-5 h-5" />
+                    <div className="w-8 h-8 rounded-md flex items-center justify-center overflow-hidden bg-white shadow-sm">
+                        <img src="/nexa-icon.png" alt="Nexa" className="w-full h-full object-contain" />
                     </div>
                     <span className="text-xl font-bold text-white tracking-tight">Nexa Gestão</span>
                 </div>

@@ -47,8 +47,8 @@ export default function Landing() {
             >
                 <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between">
                     <div className="flex items-center gap-2.5">
-                        <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-sm">
-                            <BarChart2 className="text-white w-5 h-5 flex-shrink-0" />
+                        <div className="w-8 h-8 rounded-md flex items-center justify-center overflow-hidden bg-white shadow-sm">
+                            <img src="/nexa-icon.png" alt="Nexa" className="w-full h-full object-contain" />
                         </div>
                         <span className="text-xl font-bold tracking-tight text-slate-900">Nexa Gestão</span>
                     </div>
@@ -87,8 +87,8 @@ export default function Landing() {
                     >
                         <div className="flex items-center justify-between mb-8">
                             <div className="flex items-center gap-2.5">
-                                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                                    <BarChart2 className="text-white w-5 h-5" />
+                                <div className="w-8 h-8 rounded-md flex items-center justify-center overflow-hidden bg-white shadow-sm">
+                                    <img src="/nexa-icon.png" alt="Nexa" className="w-full h-full object-contain" />
                                 </div>
                                 <span className="text-xl font-bold tracking-tight text-slate-900">Nexa Gestão</span>
                             </div>
@@ -383,8 +383,8 @@ export default function Landing() {
                                     key={tab.id}
                                     onClick={() => setActiveTab(tab.id)}
                                     className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all ${activeTab === tab.id
-                                            ? "bg-blue-600 text-white shadow-md scale-105"
-                                            : "bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white"
+                                        ? "bg-blue-600 text-white shadow-md scale-105"
+                                        : "bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white"
                                         }`}
                                 >
                                     {tab.label}
@@ -553,8 +553,8 @@ export default function Landing() {
                         {/* Brand */}
                         <div className="md:col-span-1">
                             <div className="flex items-center gap-2.5 mb-6">
-                                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                                    <BarChart2 className="text-white w-5 h-5" />
+                                <div className="w-8 h-8 rounded-md flex items-center justify-center overflow-hidden bg-white shadow-sm">
+                                    <img src="/nexa-icon.png" alt="Nexa" className="w-full h-full object-contain" />
                                 </div>
                                 <span className="text-xl font-bold tracking-tight text-slate-900">Nexa Gestão</span>
                             </div>
