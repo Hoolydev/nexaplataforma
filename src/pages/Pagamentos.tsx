@@ -6,8 +6,8 @@ export default function Pagamentos() {
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Pagamentos e Benefícios</h1>
-                    <p className="text-sm text-slate-500 mt-1">Gestão de folhas, vales e reajustes da equipe.</p>
+                    <h1 className="text-page-title">Pagamentos e Benefícios</h1>
+                    <p className="text-body-sm mt-1">Gestão de folhas, vales e reajustes da equipe.</p>
                 </div>
                 <div className="flex items-center gap-3">
                     <button className="bg-slate-100 border hover:bg-slate-200 text-slate-700 font-medium px-4 py-2 rounded-lg text-sm transition-colors flex items-center gap-2">

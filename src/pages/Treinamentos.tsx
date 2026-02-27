@@ -6,8 +6,8 @@ export default function Treinamentos() {
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Treinamentos e Integração</h1>
-                    <p className="text-sm text-slate-500 mt-1">Gestão de cursos, reciclagens e capacitação de equipes.</p>
+                    <h1 className="text-page-title">Treinamentos e Integração</h1>
+                    <p className="text-body-sm mt-1">Gestão de cursos, reciclagens e capacitação de equipes.</p>
                 </div>
                 <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-lg text-sm transition-colors shadow-sm">
                     Novo Treinamento

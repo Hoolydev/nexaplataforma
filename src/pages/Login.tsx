@@ -4,13 +4,14 @@ import { Mail, Lock, ArrowRight, Loader2, AlertCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { supabase } from "@/lib/supabase"
 
 export default function Login() {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
 
-    const handleLogin = (e: React.FormEvent) => {
+    const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault()
         setError("")
 
@@ -18,19 +19,29 @@ export default function Login() {
         const email = (form.elements.namedItem("email") as HTMLInputElement).value
         const password = (form.elements.namedItem("password") as HTMLInputElement).value
 
-        if (
-            !(email === "danielle@nexagestao.com" && password === "Daniell&123") &&
-            !(email === "admin@nexagestao.com" && password === "nexa2025")
-        ) {
-            setError("E-mail ou senha incorretos.")
-            return
-        }
-
         setLoading(true)
-        setTimeout(() => {
+
+        try {
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email,
+                password,
+            })
+
+            if (error) {
+                setError(error.message === "Invalid login credentials"
+                    ? "E-mail ou senha incorretos."
+                    : "Erro ao fazer login. Tente novamente.")
+                setLoading(false)
+                return
+            }
+
+            if (data.session) {
+                navigate("/dashboard")
+            }
+        } catch (err) {
+            setError("Erro inesperado de servidor.")
             setLoading(false)
-            navigate("/dashboard")
-        }, 800)
+        }
     }
 
     return (
@@ -38,8 +49,8 @@ export default function Login() {
             {/* Top bar */}
             <div className="px-6 py-4 border-b border-zinc-100">
                 <Link to="/" className="flex items-center gap-2 w-fit group">
-                    <div className="w-6 h-6 rounded flex items-center justify-center overflow-hidden bg-white shadow-sm">
-                        <img src="/nexa-icon.png" alt="Nexa" className="w-full h-full object-contain" />
+                    <div className="w-8 h-8 flex items-center justify-center overflow-hidden">
+                        <img src="/nexa-icon.png" alt="Nexa" className="w-full h-full object-contain mix-blend-multiply" />
                     </div>
                     <span className="text-sm font-semibold text-zinc-900 group-hover:text-zinc-700 transition-colors">
                         Nexa Gestão

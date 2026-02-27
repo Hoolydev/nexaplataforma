@@ -11,32 +11,39 @@ import Relatorios from "./pages/Relatorios"
 import Treinamentos from "./pages/Treinamentos"
 import Pagamentos from "./pages/Pagamentos"
 import Frequencia from "./pages/Frequencia"
+import Inteligencia from "./pages/Inteligencia"
+
+import { Toaster } from "sonner"
 
 // Placeholder pages
 const Configuracoes = () => <ComingSoon title="Configurações" />
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/login" element={<Login />} />
+    <>
+      <Toaster position="top-right" richColors />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/login" element={<Login />} />
 
-        {/* Protected layout with sidebar */}
-        <Route element={<Layout />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/pessoas" element={<Pessoas />} />
-          <Route path="/recrutamento" element={<Recrutamento />} />
-          <Route path="/treinamentos" element={<Treinamentos />} />
-          <Route path="/contratos" element={<Contratos />} />
-          <Route path="/pagamentos" element={<Pagamentos />} />
-          <Route path="/frequencia" element={<Frequencia />} />
-          <Route path="/relatorios" element={<Relatorios />} />
-          <Route path="/configuracoes" element={<Configuracoes />} />
-        </Route>
+          {/* Protected layout with sidebar */}
+          <Route element={<Layout />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/pessoas" element={<Pessoas />} />
+            <Route path="/recrutamento" element={<Recrutamento />} />
+            <Route path="/inteligencia" element={<Inteligencia />} />
+            <Route path="/treinamentos" element={<Treinamentos />} />
+            <Route path="/contratos" element={<Contratos />} />
+            <Route path="/pagamentos" element={<Pagamentos />} />
+            <Route path="/frequencia" element={<Frequencia />} />
+            <Route path="/relatorios" element={<Relatorios />} />
+            <Route path="/configuracoes" element={<Configuracoes />} />
+          </Route>
 
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </BrowserRouter>
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </BrowserRouter>
+    </>
   )
 }

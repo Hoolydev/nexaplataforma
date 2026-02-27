@@ -35,8 +35,8 @@ export default function Contratos() {
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Gestão de Contratos</h1>
-                    <p className="text-sm text-slate-500 mt-1">Acompanhamento de prazos e renovações</p>
+                    <h1 className="text-page-title">Gestão de Contratos</h1>
+                    <p className="text-body-sm mt-1">Acompanhamento de prazos e renovações</p>
                 </div>
             </div>
 

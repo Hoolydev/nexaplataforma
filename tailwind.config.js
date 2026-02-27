@@ -5,7 +5,9 @@ export default {
 	theme: {
 		extend: {
 			fontFamily: {
-				sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'system-ui', 'sans-serif'],
+				sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"SF Pro Text"', '"Helvetica Neue"', 'system-ui', 'sans-serif'],
+				display: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"Helvetica Neue"', 'Arial', 'sans-serif'],
+				mono: ['"SF Mono"', '"Fira Code"', '"JetBrains Mono"', 'monospace'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -58,4 +60,3 @@ export default {
 	},
 	plugins: [require("tailwindcss-animate")],
 }
-

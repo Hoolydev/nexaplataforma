@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import {
     Building2, MapPin, Users, Edit, CheckCircle2, AlertTriangle, AlertCircle, ArrowUpRight, ArrowDownRight
 } from "lucide-react"
@@ -13,6 +13,7 @@ import {
     Line, Area, AreaChart,
     PieChart, Pie, Cell
 } from "recharts"
+import { supabase } from "@/lib/supabase"
 
 interface Unit {
     id: string
@@ -24,14 +25,7 @@ interface Unit {
     capacidade: number
 }
 
-const initialData: Unit[] = [
-    { id: "1", nome: "Jardim América", cidade: "Goiânia – GO", prestadoras: 16, iniciantes: 1, minimo: 23, capacidade: 30 },
-    { id: "2", nome: "Águas Claras", cidade: "Brasília – DF", prestadoras: 17, iniciantes: 1, minimo: null, capacidade: 25 },
-    { id: "3", nome: "Moema", cidade: "São Paulo – SP", prestadoras: 8, iniciantes: 0, minimo: 10, capacidade: 15 },
-    { id: "4", nome: "Garavelo", cidade: "Aparecida de Goiânia – GO", prestadoras: 4, iniciantes: 0, minimo: null, capacidade: 4 },
-    { id: "5", nome: "Setor 44", cidade: "Goiânia – GO", prestadoras: 4, iniciantes: 0, minimo: null, capacidade: 4 },
-]
-
+// mock deleted
 // Mock Data from Prompt
 const historico_ocupacao = [
     { mes: "Set/24", "Jardim América": 12, "Águas Claras": 14, "Moema": 6, "Garavelo": 2, "Setor 44": 3 },
@@ -114,11 +108,27 @@ const statusConfig = {
 }
 
 export default function Dashboard() {
-    const [units, setUnits] = useState<Unit[]>(initialData)
+    const [units, setUnits] = useState<Unit[]>([])
+    const [loadingUnits, setLoadingUnits] = useState(true)
     const [editingUnit, setEditingUnit] = useState<Unit | null>(null)
     const [editPrestadoras, setEditPrestadoras] = useState<number>(0)
     const [editIniciantes, setEditIniciantes] = useState<number>(0)
     const [periodo, setPeriodo] = useState("6m")
+
+    useEffect(() => {
+        const fetchUnits = async () => {
+            const { data, error } = await supabase
+                .from('units')
+                .select('*')
+                .order('nome')
+
+            if (data && !error) {
+                setUnits(data as Unit[])
+            }
+            setLoadingUnits(false)
+        }
+        fetchUnits()
+    }, [])
 
     const processedUnits = useMemo(() => {
         return units.map(u => ({ ...u, ...calculateStatus(u) }))
@@ -156,7 +166,7 @@ export default function Dashboard() {
             {/* Header / Seletores */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Dashboard de Ocupação</h1>
+                    <h1 className="text-page-title">Dashboard de Ocupação</h1>
                     <p className="text-sm text-slate-500 mt-1">Visão estratégica da capacidade operacional</p>
                 </div>
                 <div className="flex items-center gap-2">

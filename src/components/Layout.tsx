@@ -1,20 +1,21 @@
 import { Outlet, NavLink, useNavigate } from "react-router-dom"
 import { useTheme } from "./theme-provider"
 import {
-    BarChart2,
-    Users,
-    UserPlus,
-    GraduationCap,
-    FileText,
-    DollarSign,
-    CalendarClock,
-    PieChart,
-    Settings,
+    LayoutDashboard,
+    ContactRound,
+    Briefcase,
+    TrendingUp,
+    BookOpen,
+    ScrollText,
+    Banknote,
+    CalendarCheck,
+    BarChart3,
+    SlidersHorizontal,
     Moon,
     LogOut,
     Menu,
     Sun,
-    X
+    X,
 } from "lucide-react"
 import { useState } from "react"
 import { Button } from "./ui/button"
@@ -22,32 +23,33 @@ import { cn } from "@/lib/utils"
 
 const navItems = [
     {
-        group: "PRINCIPAL", items: [
-            { name: "Dashboard", path: "/dashboard", icon: BarChart2 }
+        group: "Principal", items: [
+            { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard }
         ]
     },
     {
-        group: "RH", items: [
-            { name: "Pessoas", path: "/pessoas", icon: Users },
-            { name: "Recrutamento", path: "/recrutamento", icon: UserPlus },
-            { name: "Treinamentos", path: "/treinamentos", icon: GraduationCap },
+        group: "Recursos Humanos", items: [
+            { name: "Pessoas", path: "/pessoas", icon: ContactRound },
+            { name: "Recrutamento", path: "/recrutamento", icon: Briefcase },
+            { name: "Inteligência", path: "/inteligencia", icon: TrendingUp },
+            { name: "Treinamentos", path: "/treinamentos", icon: BookOpen },
         ]
     },
     {
-        group: "DP", items: [
-            { name: "Contratos", path: "/contratos", icon: FileText },
-            { name: "Pagamentos", path: "/pagamentos", icon: DollarSign },
-            { name: "Frequência", path: "/frequencia", icon: CalendarClock },
+        group: "Departamento Pessoal", items: [
+            { name: "Contratos", path: "/contratos", icon: ScrollText },
+            { name: "Pagamentos", path: "/pagamentos", icon: Banknote },
+            { name: "Frequência", path: "/frequencia", icon: CalendarCheck },
         ]
     },
     {
-        group: "RELATÓRIOS", items: [
-            { name: "Relatórios", path: "/relatorios", icon: PieChart },
+        group: "Análise", items: [
+            { name: "Relatórios", path: "/relatorios", icon: BarChart3 },
         ]
     },
     {
-        group: "SISTEMA", items: [
-            { name: "Configurações", path: "/configuracoes", icon: Settings },
+        group: "Sistema", items: [
+            { name: "Configurações", path: "/configuracoes", icon: SlidersHorizontal },
         ]
     }
 ]
@@ -60,51 +62,74 @@ export default function Layout() {
     return (
         <div className={cn("min-h-screen bg-slate-50 flex", theme === 'dark' && "dark")}>
             {/* Mobile Toggle */}
-            <div className="lg:hidden fixed top-0 w-full bg-white border-b z-50 px-4 py-3 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-md flex items-center justify-center overflow-hidden bg-white shadow-sm">
-                        <img src="/nexa-icon.png" alt="Nexa" className="w-full h-full object-contain" />
+            <div className="lg:hidden fixed top-0 w-full bg-white border-b z-50 px-4 py-3 flex items-center justify-between shadow-sm">
+                <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 flex items-center justify-center overflow-hidden">
+                        <img src="/nexa-icon.png" alt="Nexa" className="w-full h-full object-contain mix-blend-multiply" />
                     </div>
-                    <span className="font-bold text-slate-900">Nexa Gestão</span>
+                    <span className="font-semibold text-slate-900 tracking-tight">Nexa Gestão</span>
                 </div>
                 <Button variant="ghost" size="icon" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-                    {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                    {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
                 </Button>
             </div>
 
             {/* Sidebar */}
             <aside className={cn(
-                "fixed lg:static inset-y-0 left-0 z-40 w-64 bg-slate-900 text-slate-300 flex flex-col transition-transform duration-300",
+                "fixed lg:static inset-y-0 left-0 z-40 w-[220px] bg-[#0C1220] text-slate-100 flex flex-col transition-transform duration-300 border-r border-white/[0.04]",
                 mobileMenuOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
             )}>
-                <div className="p-6 flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-md flex items-center justify-center overflow-hidden bg-white shadow-sm">
-                        <img src="/nexa-icon.png" alt="Nexa" className="w-full h-full object-contain" />
+                {/* Logo */}
+                <div className="px-5 py-6 flex items-center gap-3 border-b border-white/[0.06]">
+                    <div className="w-8 h-8 flex items-center justify-center overflow-hidden shrink-0">
+                        <img
+                            src="/nexa-icon.png"
+                            alt="Nexa"
+                            className="w-full h-full object-contain"
+                            style={{ filter: 'brightness(10)' }}
+                        />
                     </div>
-                    <span className="text-xl font-bold text-white tracking-tight">Nexa Gestão</span>
+                    <div>
+                        <p className="text-[14px] font-semibold text-white tracking-tight leading-none">Nexa</p>
+                        <p className="text-[11px] text-slate-500 mt-0.5 leading-none">Gestão</p>
+                    </div>
                 </div>
 
-                <nav className="flex-1 px-4 py-6 space-y-6 overflow-y-auto">
+                {/* Nav */}
+                <nav className="flex-1 px-3 py-4 space-y-5 overflow-y-auto custom-scrollbar">
                     {navItems.map((group) => (
                         <div key={group.group}>
-                            <h3 className="px-3 text-xs font-semibold text-slate-500 tracking-wider mb-2">
+                            <p className="px-2.5 text-[10px] font-semibold text-slate-600 uppercase tracking-widest mb-1.5">
                                 {group.group}
-                            </h3>
-                            <div className="space-y-1">
+                            </p>
+                            <div className="space-y-0.5">
                                 {group.items.map((item) => (
                                     <NavLink
                                         key={item.name}
                                         to={item.path}
                                         onClick={() => setMobileMenuOpen(false)}
                                         className={({ isActive }) => cn(
-                                            "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
+                                            "group flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-[13px] font-medium transition-all duration-150",
                                             isActive
-                                                ? "bg-blue-600 text-white shadow-sm"
-                                                : "text-slate-400 hover:bg-slate-800 hover:text-white"
+                                                ? "bg-white/10 text-white"
+                                                : "text-slate-400 hover:bg-white/5 hover:text-slate-200"
                                         )}
                                     >
-                                        <item.icon className="w-4 h-4" />
-                                        {item.name}
+                                        {({ isActive }) => (
+                                            <>
+                                                <item.icon
+                                                    strokeWidth={isActive ? 2 : 1.75}
+                                                    className={cn(
+                                                        "w-[17px] h-[17px] shrink-0 transition-colors",
+                                                        isActive ? "text-blue-400" : "text-slate-500 group-hover:text-slate-300"
+                                                    )}
+                                                />
+                                                <span className="truncate">{item.name}</span>
+                                                {isActive && (
+                                                    <span className="ml-auto w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0" />
+                                                )}
+                                            </>
+                                        )}
                                     </NavLink>
                                 ))}
                             </div>
@@ -112,32 +137,35 @@ export default function Layout() {
                     ))}
                 </nav>
 
-                <div className="p-4 border-t border-slate-800 space-y-2">
-                    <Button
-                        variant="ghost"
-                        size="sm"
-                        className="w-full justify-start text-slate-400 hover:text-white hover:bg-slate-800"
+                {/* Footer */}
+                <div className="p-3 border-t border-white/[0.06] space-y-1">
+                    <button
+                        className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-[13px] font-medium text-slate-500 hover:text-slate-200 hover:bg-white/5 transition-all"
                         onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
                     >
-                        {theme === 'dark' ? <Sun className="w-4 h-4 mr-2" /> : <Moon className="w-4 h-4 mr-2" />}
+                        {theme === 'dark'
+                            ? <Sun strokeWidth={1.75} className="w-[17px] h-[17px] shrink-0" />
+                            : <Moon strokeWidth={1.75} className="w-[17px] h-[17px] shrink-0" />
+                        }
                         {theme === 'dark' ? 'Modo Claro' : 'Modo Escuro'}
-                    </Button>
-                    <div className="flex items-center gap-3 mb-4 px-2">
-                        <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center flex-shrink-0">
-                            <span className="text-sm font-bold text-white">AD</span>
+                    </button>
+
+                    <div className="flex items-center gap-2.5 px-2.5 py-2 rounded-lg">
+                        <div className="w-7 h-7 rounded-full bg-blue-600/30 border border-blue-500/30 flex items-center justify-center shrink-0">
+                            <span className="text-[11px] font-bold text-blue-300">AD</span>
                         </div>
-                        <div className="overflow-hidden">
-                            <p className="text-sm font-medium text-white truncate">Admin Nexa</p>
-                            <p className="text-xs text-slate-500 truncate">admin@nexagestao.com</p>
+                        <div className="overflow-hidden flex-1">
+                            <p className="text-[12px] font-medium text-slate-300 truncate leading-none">Admin Nexa</p>
+                            <p className="text-[10px] text-slate-600 truncate mt-0.5 leading-none">admin@nexagestao.com</p>
                         </div>
+                        <button
+                            onClick={() => navigate("/login")}
+                            className="shrink-0 text-slate-600 hover:text-slate-300 transition-colors"
+                            title="Sair"
+                        >
+                            <LogOut strokeWidth={1.75} className="w-[15px] h-[15px]" />
+                        </button>
                     </div>
-                    <Button
-                        variant="ghost"
-                        className="w-full justify-start text-slate-400 hover:text-white hover:bg-slate-800"
-                        onClick={() => navigate("/login")}
-                    >
-                        <LogOut className="w-4 h-4 mr-2" /> Sair
-                    </Button>
                 </div>
             </aside>
 
@@ -151,7 +179,7 @@ export default function Layout() {
             {/* Mobile overlay */}
             {mobileMenuOpen && (
                 <div
-                    className="lg:hidden fixed inset-0 bg-slate-900/50 z-30"
+                    className="lg:hidden fixed inset-0 bg-slate-900/60 z-30 backdrop-blur-sm"
                     onClick={() => setMobileMenuOpen(false)}
                 />
             )}

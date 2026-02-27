@@ -2,6 +2,9 @@ import { useState } from "react"
 import { Users, UserCheck, Clock, Plus, Search, Calendar, GripVertical, MoreHorizontal } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from "@/components/ui/dialog"
+import { Label } from "@/components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import {
     DndContext,
     DragOverlay,
@@ -31,17 +34,23 @@ interface Candidata {
     vaga: string
     etapa: Etapa
     data: string
+    canal?: string
 }
 
 // --- Initial Data ---
 const initialCandidatas: Candidata[] = [
-    { id: "1", nome: "Josiane Ferreira", vaga: "Jardim América", etapa: "Triagem", data: "2025-02-18" },
-    { id: "2", nome: "Karina Nunes", vaga: "Moema", etapa: "Triagem", data: "2025-02-19" },
-    { id: "3", nome: "Letícia Prado", vaga: "Águas Claras", etapa: "Entrevista", data: "2025-02-20" },
-    { id: "4", nome: "Mariana Costa", vaga: "Jardim América", etapa: "Entrevista", data: "2025-02-21" },
-    { id: "5", nome: "Natália Silva", vaga: "Jardim América", etapa: "Aprovadas", data: "2025-02-22" },
-    { id: "6", nome: "Olivia Dias", vaga: "Garavelo", etapa: "Integração", data: "2025-02-15" },
-    { id: "7", nome: "Paula Barros", vaga: "Setor 44", etapa: "Contratadas", data: "2025-02-10" }
+    { id: "1", nome: "Josiane Ferreira", vaga: "Jardim América", etapa: "Triagem", data: "2025-02-18", canal: "WhatsApp" },
+    { id: "2", nome: "Karina Nunes", vaga: "Moema", etapa: "Triagem", data: "2025-02-19", canal: "LinkedIn Org." },
+    { id: "3", nome: "Letícia Prado", vaga: "Águas Claras", etapa: "Entrevista", data: "2025-02-20", canal: "Tráfego Pago" },
+    { id: "4", nome: "Mariana Costa", vaga: "Jardim América", etapa: "Entrevista", data: "2025-02-21", canal: "WhatsApp" },
+    { id: "5", nome: "Natália Silva", vaga: "Jardim América", etapa: "Aprovadas", data: "2025-02-22", canal: "Indicação Interna" },
+    { id: "6", nome: "Olivia Dias", vaga: "Garavelo", etapa: "Integração", data: "2025-02-15", canal: "Indicação Interna" },
+    { id: "7", nome: "Paula Barros", vaga: "Setor 44", etapa: "Contratadas", data: "2025-02-10", canal: "OLX" }
+]
+
+const CANAIS_ORIGEM = [
+    "WhatsApp", "Instagram Ads", "LinkedIn Org.", "LinkedIn Pago",
+    "OLX", "Indicação Interna", "Telegram", "Tráfego Pago", "Outro"
 ]
 
 const KANBAN_STAGES: Etapa[] = ["Triagem", "Entrevista", "Aprovadas", "Integração", "Contratadas"]
@@ -97,6 +106,32 @@ export default function Recrutamento() {
     const [candidatas, setCandidatas] = useState<Candidata[]>(initialCandidatas)
     const [searchTerm, setSearchTerm] = useState("")
     const [activeId, setActiveId] = useState<string | null>(null)
+
+    // Modal State
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false)
+    const [newCandNome, setNewCandNome] = useState("")
+    const [newCandVaga, setNewCandVaga] = useState("")
+    const [newCandCanal, setNewCandCanal] = useState("")
+
+    const handleAddCandidata = (e: React.FormEvent) => {
+        e.preventDefault()
+        if (!newCandNome || !newCandVaga || !newCandCanal) return
+
+        const newCand: Candidata = {
+            id: Math.random().toString(36).substr(2, 9),
+            nome: newCandNome,
+            vaga: newCandVaga,
+            etapa: "Triagem",
+            data: new Date().toISOString().split('T')[0],
+            canal: newCandCanal
+        }
+
+        setCandidatas([newCand, ...candidatas])
+        setIsAddModalOpen(false)
+        setNewCandNome("")
+        setNewCandVaga("")
+        setNewCandCanal("")
+    }
 
     // Dnd-kit sensors configuration
     const sensors = useSensors(
@@ -179,7 +214,7 @@ export default function Recrutamento() {
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 shrink-0">
                 <div>
-                    <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Recrutamento e Seleção</h1>
+                    <h1 className="text-page-title">Recrutamento e Seleção</h1>
                     <p className="text-sm text-slate-500 mt-1">Pipeline de candidatas e gestão de vagas</p>
                 </div>
                 <div className="flex items-center gap-3">
@@ -192,7 +227,7 @@ export default function Recrutamento() {
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
                     </div>
-                    <Button className="bg-blue-600 hover:bg-blue-700 shadow-sm shrink-0 h-10">
+                    <Button onClick={() => setIsAddModalOpen(true)} className="bg-blue-600 hover:bg-blue-700 shadow-sm shrink-0 h-10">
                         <Plus className="w-4 h-4 mr-2" />
                         <span className="hidden sm:inline">Nova Vaga</span>
                         <span className="sm:hidden">Vaga</span>
@@ -275,13 +310,6 @@ export default function Recrutamento() {
                                                 </div>
                                             )}
                                         </div>
-
-                                        <div className="p-2 lg:p-3 pt-0 shrink-0">
-                                            <Button variant="ghost" className="w-full text-xs lg:text-sm text-slate-500 hover:text-slate-900 border border-transparent hover:border-slate-200 hover:bg-white border-dashed bg-transparent transition-all h-9 lg:h-10">
-                                                <Plus className="w-4 h-4 mr-2" />
-                                                Adicionar
-                                            </Button>
-                                        </div>
                                     </div>
                                 </SortableContext>
                             )
@@ -299,6 +327,67 @@ export default function Recrutamento() {
                     ) : null}
                 </DragOverlay>
             </DndContext>
+
+            {/* Dialog Nova Candidata */}
+            <Dialog open={isAddModalOpen} onOpenChange={setIsAddModalOpen}>
+                <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                        <DialogTitle>Adicionar Candidata</DialogTitle>
+                        <DialogDescription>
+                            Preencha as informações para adicionar uma nova candidata ao pipeline. O canal de origem é obrigatório para as métricas da empresa.
+                        </DialogDescription>
+                    </DialogHeader>
+                    <form onSubmit={handleAddCandidata} className="grid gap-4 py-4">
+                        <div className="grid gap-2">
+                            <Label htmlFor="nome" className="text-xs font-semibold uppercase text-slate-500">
+                                Nome da Candidata
+                            </Label>
+                            <Input
+                                id="nome"
+                                placeholder="Ex: Maria Joaquina"
+                                value={newCandNome}
+                                onChange={(e) => setNewCandNome(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className="grid gap-2">
+                            <Label htmlFor="vaga" className="text-xs font-semibold uppercase text-slate-500">
+                                Vaga/Unidade
+                            </Label>
+                            <Input
+                                id="vaga"
+                                placeholder="Ex: Jardim América - Atendente"
+                                value={newCandVaga}
+                                onChange={(e) => setNewCandVaga(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className="grid gap-2">
+                            <Label htmlFor="canal" className="text-xs font-semibold uppercase text-slate-500">
+                                Canal de Origem <span className="text-red-500">*</span>
+                            </Label>
+                            <Select required value={newCandCanal} onValueChange={setNewCandCanal}>
+                                <SelectTrigger className="w-full">
+                                    <SelectValue placeholder="Selecione o canal..." />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {CANAIS_ORIGEM.map(canal => (
+                                        <SelectItem key={canal} value={canal}>{canal}</SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <DialogFooter className="mt-4">
+                            <DialogClose asChild>
+                                <Button type="button" variant="outline">Cancelar</Button>
+                            </DialogClose>
+                            <Button type="submit" className="bg-blue-600 hover:bg-blue-700" disabled={!newCandNome || !newCandVaga || !newCandCanal}>
+                                Salvar Candidata
+                            </Button>
+                        </DialogFooter>
+                    </form>
+                </DialogContent>
+            </Dialog>
         </div>
     )
 }

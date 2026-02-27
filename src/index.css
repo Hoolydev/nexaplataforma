@@ -73,13 +73,46 @@
 
   body {
     @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+    text-rendering: optimizeLegibility;
   }
 }
 
-/* Custom Scrollbar for Kanban */
+/* ─── Typography utilities ──────────────────────────────────────── */
+@layer utilities {
+  .text-page-title {
+    @apply text-[22px] font-semibold tracking-[-0.3px] text-slate-900 leading-snug;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .text-section-title {
+    @apply text-base font-semibold tracking-[-0.1px] text-slate-900;
+  }
+
+  .text-card-label {
+    @apply text-[11px] font-semibold uppercase tracking-wider text-slate-500;
+  }
+
+  .text-body {
+    @apply text-sm font-normal text-slate-600 leading-relaxed;
+  }
+
+  .text-body-sm {
+    @apply text-xs font-normal text-slate-500 leading-relaxed;
+  }
+
+  .text-numeric {
+    @apply text-3xl font-bold tracking-tight text-slate-900 leading-none;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* ─── Custom Scrollbar ──────────────────────────────────────────── */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {

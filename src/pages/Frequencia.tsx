@@ -6,8 +6,8 @@ export default function Frequencia() {
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Ponto e Frequência</h1>
-                    <p className="text-sm text-slate-500 mt-1">Acompanhamento de horas, faltas e espelhos de ponto das filiais.</p>
+                    <h1 className="text-page-title">Ponto e Frequência</h1>
+                    <p className="text-body-sm mt-1">Acompanhamento de horas, faltas e espelhos de ponto das filiais.</p>
                 </div>
                 <button className="bg-white border hover:bg-slate-50 text-slate-700 font-medium px-4 py-2 rounded-lg text-sm transition-colors shadow-sm flex items-center gap-2">
                     <CalendarDays className="w-4 h-4" />
