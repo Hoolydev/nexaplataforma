@@ -109,7 +109,6 @@ const statusConfig = {
 
 export default function Dashboard() {
     const [units, setUnits] = useState<Unit[]>([])
-    const [loadingUnits, setLoadingUnits] = useState(true)
     const [editingUnit, setEditingUnit] = useState<Unit | null>(null)
     const [editPrestadoras, setEditPrestadoras] = useState<number>(0)
     const [editIniciantes, setEditIniciantes] = useState<number>(0)
@@ -125,7 +124,6 @@ export default function Dashboard() {
             if (data && !error) {
                 setUnits(data as Unit[])
             }
-            setLoadingUnits(false)
         }
         fetchUnits()
     }, [])
